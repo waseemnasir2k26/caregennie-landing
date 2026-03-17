@@ -108,6 +108,26 @@ export default function Footer() {
             CareGennie is a trading name of [COMPANY_LEGAL_NAME]. Registered in
             England &amp; Wales.
           </p>
+          <p className="text-xs text-white/30 text-center mt-3">
+            Designed &amp; Developed by{" "}
+            <a
+              href="https://www.skynetjoe.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-white transition-colors underline underline-offset-2"
+            >
+              SkynetLabs
+            </a>
+            {" "}&amp;{" "}
+            <a
+              href="https://www.waseemnasir.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-white transition-colors underline underline-offset-2"
+            >
+              WaseemNasir.com
+            </a>
+          </p>
         </div>
       </div>
     </footer>

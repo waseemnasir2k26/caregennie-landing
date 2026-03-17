@@ -22,7 +22,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://caregennie.app"),
-  title: "CareGennie \u2014 Intelligent Software for UK Homecare Agencies",
+  title: {
+    default: "CareGennie \u2014 Intelligent Software for UK Homecare Agencies",
+    template: "%s | CareGennie",
+  },
   description:
     "Automate scheduling, compliance, and care management for your homecare agency. Join the CareGennie waiting list for early access.",
   keywords: [
@@ -31,15 +34,26 @@ export const metadata: Metadata = {
     "homecare agency scheduling",
     "care management platform",
     "domiciliary care software",
+    "home care management system",
+    "CQC inspection software",
+    "carer scheduling app UK",
+    "domiciliary care management",
+    "digital care planning software",
   ],
+  authors: [
+    { name: "SkynetLabs", url: "https://www.skynetjoe.com" },
+    { name: "Waseem Nasir", url: "https://www.waseemnasir.com" },
+  ],
+  creator: "SkynetLabs",
+  publisher: "CareGennie",
   openGraph: {
     title: "CareGennie \u2014 Intelligent Software for UK Homecare Agencies",
     description:
-      "Stop drowning in paperwork. Start delivering better care.",
+      "Stop drowning in paperwork. Start delivering better care. Automate scheduling, compliance, and care management for your UK homecare agency.",
     url: "https://caregennie.app",
     siteName: "CareGennie",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
@@ -47,7 +61,20 @@ export const metadata: Metadata = {
     description:
       "Automate scheduling, compliance, and care management for your homecare agency.",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://caregennie.app",
+  },
 };
 
 export default function RootLayout({
