@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareGennie — Project Deliverable Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0D7377;
+      --primary-light: #14919B;
+      --accent: #F59E0B;
+      --accent-dark: #D97706;
+      --bg: #FAFBFC;
+      --surface: #FFFFFF;
+      --text: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #94A3B8;
+      --border: #E2E8F0;
+      --success: #10B981;
+      --error: #EF4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media screen {
+      .page {
+        margin: 20px auto;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        border-radius: 4px;
+      }
+    }
+
+    @media print {
+      .page {
+        page-break-after: always;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .page:last-child {
+        page-break-after: auto;
+      }
+      .no-print { display: none !important; }
+    }
+
+    /* ===== COVER PAGE ===== */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 50px;
+      background: linear-gradient(135deg, #FAFBFC 0%, #E8F4F5 40%, #FFF8E1 100%);
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent));
+    }
+
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 50px;
+    }
+
+    .cover-logo-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--primary);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+    }
+
+    .cover-logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: var(--primary);
+      color: white;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .cover h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 16px;
+      max-width: 500px;
+    }
+
+    .cover h1 span {
+      color: var(--primary);
+    }
+
+    .cover .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 420px;
+      margin-bottom: 50px;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      max-width: 520px;
+      margin-bottom: 50px;
+    }
+
+    .cover-meta-item {
+      text-align: center;
+    }
+
+    .cover-meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .cover-meta-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cover-url {
+      background: var(--text);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 40px;
+    }
+
+    .cover-footer {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+
+    .cover-footer p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .cover-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ===== CONTENT PAGES ===== */
+    .content-page {
+      padding: 50px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 36px;
+    }
+
+    .page-header-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--primary);
+    }
+
+    .page-header-title {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .section-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      background: var(--bg);
+    }
+
+    .feature-card .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .feature-card p {
+      font-size: 12px;
+      margin-bottom: 0;
+      color: var(--text-muted);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      color: white;
+    }
+
+    .stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: var(--success);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .checklist li strong {
+      color: var(--text);
+    }
+
+    /* Enhancement list */
+    .enhancement-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .enhancement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+    }
+
+    .enhancement-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .enhancement-item h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .enhancement-item p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Tech stack */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .tech-item {
+      text-align: center;
+      padding: 16px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+    }
+
+    .tech-item .emoji {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .tech-item h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .tech-item p {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* CTA section */
+    .cta-box {
+      background: linear-gradient(135deg, var(--text) 0%, #1E293B 100%);
+      border-radius: 16px;
+      padding: 36px;
+      text-align: center;
+      color: white;
+      margin-top: 30px;
+    }
+
+    .cta-box h2 {
+      color: white;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .cta-box p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cta-box .cta-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .cta-box .cta-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* Page footer */
+    .page-footer {
+      position: absolute;
+      bottom: 30px;
+      left: 50px;
+      right: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Print button */
+    .print-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--text);
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      z-index: 1000;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+    }
+
+    .print-bar button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .print-bar button:hover {
+      background: var(--accent-dark);
+    }
+
+    @media screen {
+      body { padding-top: 56px; }
+    }
+
+    /* SEO highlight box */
+    .seo-box {
+      border: 2px solid var(--success);
+      border-radius: 12px;
+      padding: 20px;
+      background: #ECFDF5;
+      margin: 16px 0;
+    }
+
+    .seo-box h3 {
+      color: #065F46;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .seo-box ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .seo-box li {
+      font-size: 12px;
+      color: #047857;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .seo-box li::before {
+      content: '✓';
+      font-weight: 700;
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print bar -->
+  <div class="print-bar no-print">
+    <span>📄 Save as PDF: Click the button or press <strong>Ctrl + P</strong></span>
+    <button onclick="window.print()">💾 Save as PDF</button>
+  </div>
+
+  <!-- ==================== PAGE 1: COVER ==================== -->
+  <div class="page cover">
+    <div class="cover-logo">
+      <div class="cover-logo-icon">CG</div>
+      <div class="cover-logo-text">CareGennie</div>
+    </div>
+
+    <div class="cover-badge">📋 Project Deliverable</div>
+
+    <h1>Landing Page <span>Delivery Report</span></h1>
+    <p class="subtitle">Production-ready website for UK homecare agencies — designed to convert visitors into waiting list and beta testing signups.</p>
+
+    <div class="cover-url">🔗 caregennie-landing.vercel.app</div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Delivered</div>
+        <div class="cover-meta-value">March 2026</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Status</div>
+        <div class="cover-meta-value">✅ Live</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Version</div>
+        <div class="cover-meta-value">v1.0 Demo</div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <p>Designed & Developed by <a href="https://www.skynetjoe.com">SkynetLabs</a> & <a href="https://www.waseemnasir.com">WaseemNasir.com</a></p>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: WHAT WE BUILT ==================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <div class="page-header-logo">CareGennie</div>
+      <div class="page-header-title">Project Deliverable</div>
+    </div>
+
+    <div class="section-number">01 — Overview</div>
+    <h2>What We Built 🏗️</h2>
+    <p>A complete, conversion-optimised landing page built with enterprise-grade technology. Every section is designed to guide UK homecare agency owners from awareness to signup.</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Sections Built</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">15+</div>
+        <div class="stat-label">Components</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">2,500+</div>
+        <div class="stat-label">Lines of Code</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-number">02 — Sections</div>
+    <h2>Page Sections Delivered ✅</h2>
+
+    <ul class="checklist">
+      <li><span class="check">✓</span><div><strong>Navigation Bar</strong> — Sticky header with glassmorphism effect on scroll, mobile hamburger menu, CTA button</div></li>
+      <li><span class="check">✓</span><div><strong>Hero Section</strong> — Bold headline, subheadline, dual CTA buttons (Waiting List + Beta), trust indicators with checkmarks</div></li>
+      <li><span class="check">✓</span><div><strong>Problem → Solution</strong> — 3 pain point cards (red) transitioning to 3 solution cards (green) showing CareGennie's value</div></li>
+      <li><span class="check">✓</span><div><strong>Features Grid</strong> — 6 feature cards with icons: Scheduling, Care Plans, CQC Compliance, Dashboard, Mobile App, Integrations</div></li>
+      <li><span class="check">✓</span><div><strong>How It Works</strong> — 3-step visual flow with connecting line (Sign Up → Setup → Transform)</div></li>
+      <li><span class="check">✓</span><div><strong>Social Proof</strong> — Animated count-up statistics and founding team quote</div></li>
+      <li><span class="check">✓</span><div><strong>Dual Signup Forms</strong> — Waiting List (3 fields) + Beta Testing (5 fields) with full validation and success states</div></li>
+      <li><span class="check">✓</span><div><strong>FAQ Accordion</strong> — 6 expandable Q&A items covering launch, pricing, CQC, compatibility</div></li>
+      <li><span class="check">✓</span><div><strong>Footer</strong> — Navigation, legal text, social icons (LinkedIn, X), SkynetLabs credit</div></li>
+      <li><span class="check">✓</span><div><strong>Privacy Policy</strong> — Full GDPR-compliant page with 10 sections, ready for legal review</div></li>
+    </ul>
+
+    <div class="page-footer">
+      <span>SkynetLabs & WaseemNasir.com</span>
+      <span>Page 2</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3: TECHNICAL & SEO ==================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <div class="page-header-logo">CareGennie</div>
+      <div class="page-header-title">Project Deliverable</div>
+    </div>
+
+    <div class="section-number">03 — Technology</div>
+    <h2>Tech Stack ⚙️</h2>
+    <p>Built with the latest production-grade tools used by companies like Vercel, Netflix, and Stripe.</p>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="emoji">⚡</div>
+        <h4>Next.js 16</h4>
+        <p>React framework</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">🔷</div>
+        <h4>TypeScript</h4>
+        <p>Type-safe code</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">🎨</div>
+        <h4>Tailwind CSS 4</h4>
+        <p>Utility-first styling</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">✨</div>
+        <h4>Framer Motion</h4>
+        <p>Scroll animations</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">📝</div>
+        <h4>React Hook Form</h4>
+        <p>Form handling</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">🛡️</div>
+        <h4>Zod</h4>
+        <p>Data validation</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">📧</div>
+        <h4>Resend</h4>
+        <p>Email API</p>
+      </div>
+      <div class="tech-item">
+        <div class="emoji">🚀</div>
+        <h4>Vercel</h4>
+        <p>Hosting & CDN</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-number">04 — SEO & Crawlers</div>
+    <h2>Search Engine Optimisation 🔍</h2>
+    <p>Fully optimised for Google, Bing, and social media crawlers from day one.</p>
+
+    <div class="seo-box">
+      <h3>🟢 All SEO Checks Passing</h3>
+      <ul>
+        <li>JSON-LD structured data (3 schemas)</li>
+        <li>FAQPage schema for rich snippets</li>
+        <li>Auto-generated sitemap.xml</li>
+        <li>Robots.txt configured</li>
+        <li>Canonical URL set</li>
+        <li>Open Graph meta tags</li>
+        <li>Twitter Card meta tags</li>
+        <li>Dynamic OG image generation</li>
+        <li>10 targeted keywords</li>
+        <li>en_GB locale for UK targeting</li>
+        <li>Semantic HTML (h1→h6 hierarchy)</li>
+        <li>GoogleBot max preview directives</li>
+        <li>WCAG 2.1 AA accessibility</li>
+        <li>Mobile-first responsive design</li>
+      </ul>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>SoftwareApplication Schema</h3>
+        <p>Tells Google this is a software product — improves search visibility</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">❓</div>
+        <h3>FAQPage Schema</h3>
+        <p>All 6 FAQs marked up for Google rich snippets in search results</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🏢</div>
+        <h3>Organization Schema</h3>
+        <p>Company info structured for Google Knowledge Panel eligibility</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🖼️</div>
+        <h3>Dynamic OG Image</h3>
+        <p>Auto-generated preview image for LinkedIn, Twitter, WhatsApp shares</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>SkynetLabs & WaseemNasir.com</span>
+      <span>Page 3</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4: FEATURES & BACKEND ==================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <div class="page-header-logo">CareGennie</div>
+      <div class="page-header-title">Project Deliverable</div>
+    </div>
+
+    <div class="section-number">05 — Backend & Forms</div>
+    <h2>What's Under the Hood 🔧</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">📝</div>
+        <h3>Dual Signup Forms</h3>
+        <p>Waiting List (3 fields) + Beta Application (5 fields) with real-time validation</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🛡️</div>
+        <h3>Rate Limiting</h3>
+        <p>API protected against spam — max 5 requests per minute per IP</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📧</div>
+        <h3>Email Integration</h3>
+        <p>Resend API ready — confirmation emails sent automatically on signup</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔗</div>
+        <h3>Webhook Support</h3>
+        <p>Optional webhook fallback to Google Sheets or any external service</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-number">06 — Design & UX</div>
+    <h2>Design Highlights 🎨</h2>
+
+    <ul class="checklist">
+      <li><span class="check">✓</span><div><strong>Mobile-first responsive</strong> — Tested from 375px (iPhone SE) to 1440px+ (desktop)</div></li>
+      <li><span class="check">✓</span><div><strong>Scroll animations</strong> — Staggered fade-in effects on every section using Framer Motion</div></li>
+      <li><span class="check">✓</span><div><strong>Glassmorphism navbar</strong> — Transparent to frosted glass transition on scroll</div></li>
+      <li><span class="check">✓</span><div><strong>Animated counters</strong> — Stats count up from 0 when scrolled into view</div></li>
+      <li><span class="check">✓</span><div><strong>Hover micro-interactions</strong> — Cards lift with shadow expansion on hover</div></li>
+      <li><span class="check">✓</span><div><strong>Colour psychology</strong> — Teal (trust/healthcare) + Amber (warmth/action) palette</div></li>
+      <li><span class="check">✓</span><div><strong>Accessibility</strong> — ARIA labels, focus states, semantic HTML, keyboard navigation</div></li>
+      <li><span class="check">✓</span><div><strong>Reduced motion support</strong> — Animations respect user's system preferences</div></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <div class="section-number">07 — Deployment</div>
+    <h2>Live & Ready 🚀</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🌐</div>
+        <h3>Vercel Hosting</h3>
+        <p>Global CDN, automatic HTTPS, instant deployments</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📦</div>
+        <h3>GitHub Repository</h3>
+        <p>Full source code with version control and commit history</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔌</div>
+        <h3>Custom Domain Ready</h3>
+        <p>Connect caregennie.app — just add DNS records in Vercel</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚙️</div>
+        <h3>Environment Variables</h3>
+        <p>RESEND_API_KEY + SIGNUP_WEBHOOK_URL — set in Vercel dashboard</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>SkynetLabs & WaseemNasir.com</span>
+      <span>Page 4</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 5: ENHANCEMENTS & CTA ==================== -->
+  <div class="page content-page">
+    <div class="page-header">
+      <div class="page-header-logo">CareGennie</div>
+      <div class="page-header-title">Project Deliverable</div>
+    </div>
+
+    <div class="section-number">08 — Next Phase</div>
+    <h2>Future Enhancements We Can Add 🚀</h2>
+    <p>Here's what we can build next to take CareGennie to the next level:</p>
+
+    <div class="enhancement-grid">
+      <div class="enhancement-item">
+        <div class="enhancement-number">01</div>
+        <div>
+          <h4>💬 Live Chat / WhatsApp</h4>
+          <p>Let visitors ask questions instantly</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">02</div>
+        <div>
+          <h4>📰 Blog & Resources</h4>
+          <p>SEO-driven content for organic traffic</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">03</div>
+        <div>
+          <h4>🎥 Video Demo Section</h4>
+          <p>Product walkthrough or explainer video</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">04</div>
+        <div>
+          <h4>⭐ Testimonials Carousel</h4>
+          <p>Showcase beta tester feedback</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">05</div>
+        <div>
+          <h4>💰 Pricing Page</h4>
+          <p>Tiered pricing with feature comparison</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">06</div>
+        <div>
+          <h4>📋 Multi-Step Onboarding</h4>
+          <p>Detailed signup wizard for lead qualification</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">07</div>
+        <div>
+          <h4>📧 Email Drip Sequence</h4>
+          <p>Welcome → features → launch announcement</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">08</div>
+        <div>
+          <h4>📈 Analytics Dashboard</h4>
+          <p>Track signups, views, conversions</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">09</div>
+        <div>
+          <h4>🍪 Cookie Consent Banner</h4>
+          <p>GDPR-compliant accept/reject notice</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">10</div>
+        <div>
+          <h4>📖 Case Studies Page</h4>
+          <p>Success stories from beta testers</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">11</div>
+        <div>
+          <h4>🔗 Integration Partners</h4>
+          <p>NHS systems & payroll provider logos</p>
+        </div>
+      </div>
+      <div class="enhancement-item">
+        <div class="enhancement-number">12</div>
+        <div>
+          <h4>⚖️ Comparison Page</h4>
+          <p>"CareGennie vs Others" for SEO traffic</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h2>Ready to Take CareGennie Further? 🙌</h2>
+      <p>We'd love to discuss the next phase and help you build the features that matter most to your users.</p>
+      <div class="cta-links">
+        <a href="https://www.skynetjoe.com" class="cta-link">🌐 skynetjoe.com</a>
+        <a href="https://www.waseemnasir.com" class="cta-link">🌐 waseemnasir.com</a>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>SkynetLabs & WaseemNasir.com</span>
+      <span>Page 5</span>
+    </div>
+  </div>
+
+</body>
+</html>
