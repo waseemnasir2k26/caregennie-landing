@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CareGennie Landing Page
+
+Production-ready landing page for [CareGennie](https://caregennie.app) — intelligent software for UK homecare agencies.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **Animations:** Framer Motion
+- **Forms:** React Hook Form + Zod validation
+- **Email:** Resend API (with fallback)
+- **Deployment:** Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the project root:
 
-## Learn More
+```env
+# Email (optional — forms work without this)
+RESEND_API_KEY=re_xxxx
 
-To learn more about Next.js, take a look at the following resources:
+# Webhook fallback (optional)
+SIGNUP_WEBHOOK_URL=https://hooks.example.com/xxxx
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The signup forms work without any API keys configured — submissions are logged to the console and the success state is shown.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+app/
+  layout.tsx              — Root layout, fonts, SEO metadata
+  page.tsx                — Main landing page
+  globals.css             — Tailwind + CSS custom properties
+  privacy-policy/page.tsx — Privacy policy page
+  api/signup/route.ts     — Form submission API
+  opengraph-image.tsx     — Auto-generated OG image
+components/
+  Navbar.tsx              — Sticky glassmorphism nav
+  Hero.tsx                — Hero with dual CTA
+  ProblemSolution.tsx     — Pain points → solutions
+  Features.tsx            — 6-feature grid
+  HowItWorks.tsx          — 3-step process
+  SocialProof.tsx         — Animated counters + quote
+  SignupForm.tsx          — Dual-track signup forms
+  FAQ.tsx                 — Accordion FAQ
+  Footer.tsx              — Footer with links + socials
+  ui/                     — Button, Input, Badge primitives
+lib/
+  constants.ts            — All copy and content
+  utils.ts                — Utility functions
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub
+2. Connect the repo to [Vercel](https://vercel.com)
+3. Set environment variables in Vercel dashboard
+4. Configure custom domain: `caregennie.app`
+5. Deploy with `vercel --prod` or via GitHub integration
+
+## Features
+
+- Dual signup forms (waiting list + beta testing) with Zod validation
+- Animated counters, staggered scroll animations, FAQ accordion
+- Mobile-first responsive design (375px to 1440px+)
+- GDPR-compliant privacy policy page
+- Rate-limited API route with Resend email integration
+- Auto-generated Open Graph image
+- Sticky navbar with glassmorphism scroll effect
+- WCAG 2.1 AA accessible — semantic HTML, focus states, ARIA labels
