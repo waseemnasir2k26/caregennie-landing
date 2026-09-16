@@ -2,6 +2,11 @@
 
 Production-ready landing page for [CareGennie](https://caregennie.app) — intelligent software for UK homecare agencies.
 
+## Status
+
+Last reviewed: September 2026 · release v2026.09
+
+
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
