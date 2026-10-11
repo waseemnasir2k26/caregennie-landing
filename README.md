@@ -4,7 +4,7 @@ Production-ready landing page for [CareGennie](https://caregennie.app) — intel
 
 ## Status
 
-Last reviewed: September 2026 · release v2026.09
+Last reviewed: October 2026 · release v2026.10
 
 
 ## Tech Stack
@@ -90,3 +90,11 @@ lib/
 - Auto-generated Open Graph image
 - Sticky navbar with glassmorphism scroll effect
 - WCAG 2.1 AA accessible — semantic HTML, focus states, ARIA labels
+
+## Work with SkynetLabs
+
+Built by [Waseem Nasir](https://www.skynetjoe.com/?utm_source=github&utm_medium=readme&utm_campaign=caregennie-landing) at SkynetLabs — n8n + AI automation for small businesses.
+
+- Hire on Fiverr: https://www.fiverr.com/agencies/skynetjoellc
+- Hire on Upwork: https://www.upwork.com/freelancers/muhammadwaseemnasir
+- Book a free call: https://calendly.com/skynetlabs/schedule-a-free-consultation
