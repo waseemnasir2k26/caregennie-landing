@@ -1,100 +1,28 @@
-# CareGennie Landing Page
+# CareGennie Landing Page (demo)
 
-Production-ready landing page for [CareGennie](https://caregennie.app) — intelligent software for UK homecare agencies.
+A landing page for a homecare-agency software product: hero with two calls to action, problem and solution, six-feature grid, how-it-works steps, FAQ and a dual-track signup form. Built as a speculative pitch.
 
-## Status
+**Live:** https://caregennie-landing.vercel.app
 
-Last reviewed: October 2026 · release v2026.10
+## Stack
 
+Next.js 16 (App Router), TypeScript, Tailwind CSS 4, Framer Motion, React Hook Form with Zod, Resend for email with a console fallback, deployed on Vercel.
 
-## Tech Stack
-
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 4
-- **Animations:** Framer Motion
-- **Forms:** React Hook Form + Zod validation
-- **Email:** Resend API (with fallback)
-- **Deployment:** Vercel
-
-## Getting Started
+## Run it
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
-npm run dev
-
-# Build for production
+npm run dev     # http://localhost:3000
 npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
-
-## Environment Variables
-
-Create a `.env.local` file in the project root:
+Optional `.env.local`:
 
 ```env
-# Email (optional — forms work without this)
-RESEND_API_KEY=re_xxxx
-
-# Webhook fallback (optional)
-SIGNUP_WEBHOOK_URL=https://hooks.example.com/xxxx
+RESEND_API_KEY=
+SIGNUP_WEBHOOK_URL=
 ```
 
-The signup forms work without any API keys configured — submissions are logged to the console and the success state is shown.
+Without keys the signup form still works and logs submissions to the console. Copy and content live in `lib/constants.ts`.
 
-## Project Structure
-
-```
-app/
-  layout.tsx              — Root layout, fonts, SEO metadata
-  page.tsx                — Main landing page
-  globals.css             — Tailwind + CSS custom properties
-  privacy-policy/page.tsx — Privacy policy page
-  api/signup/route.ts     — Form submission API
-  opengraph-image.tsx     — Auto-generated OG image
-components/
-  Navbar.tsx              — Sticky glassmorphism nav
-  Hero.tsx                — Hero with dual CTA
-  ProblemSolution.tsx     — Pain points → solutions
-  Features.tsx            — 6-feature grid
-  HowItWorks.tsx          — 3-step process
-  SocialProof.tsx         — Animated counters + quote
-  SignupForm.tsx          — Dual-track signup forms
-  FAQ.tsx                 — Accordion FAQ
-  Footer.tsx              — Footer with links + socials
-  ui/                     — Button, Input, Badge primitives
-lib/
-  constants.ts            — All copy and content
-  utils.ts                — Utility functions
-```
-
-## Deployment
-
-1. Push to GitHub
-2. Connect the repo to [Vercel](https://vercel.com)
-3. Set environment variables in Vercel dashboard
-4. Configure custom domain: `caregennie.app`
-5. Deploy with `vercel --prod` or via GitHub integration
-
-## Features
-
-- Dual signup forms (waiting list + beta testing) with Zod validation
-- Animated counters, staggered scroll animations, FAQ accordion
-- Mobile-first responsive design (375px to 1440px+)
-- GDPR-compliant privacy policy page
-- Rate-limited API route with Resend email integration
-- Auto-generated Open Graph image
-- Sticky navbar with glassmorphism scroll effect
-- WCAG 2.1 AA accessible — semantic HTML, focus states, ARIA labels
-
-## Work with SkynetLabs
-
-Built by [Waseem Nasir](https://www.skynetjoe.com/?utm_source=github&utm_medium=readme&utm_campaign=caregennie-landing) at SkynetLabs — n8n + AI automation for small businesses.
-
-- Hire on Fiverr: https://www.fiverr.com/agencies/skynetjoellc
-- Hire on Upwork: https://www.upwork.com/freelancers/muhammadwaseemnasir
-- Book a free call: https://calendly.com/skynetlabs/schedule-a-free-consultation
+Demo built by SkynetLabs.
